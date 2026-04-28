@@ -1,5 +1,8 @@
 *.DS_Store
 .deps
+*.code-workspace
+*.swp
+*.swo
 /aclocal.m4
 /Makefile
 /config.log

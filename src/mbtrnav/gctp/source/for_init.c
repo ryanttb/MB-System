@@ -30,7 +30,7 @@ long outspheroid;	/* output spheroid				*/
 char *fn27;		/* NAD 1927 parameter file			*/
 char *fn83;		/* NAD 1983 parameter file			*/
 long *iflg;		/* status flag					*/
-long (*for_trans[])();	/* forward function pointer			*/
+long (*for_trans[])(double, double, double *, double *);	/* forward function pointer			*/
 {
 long zone;		/* zone number					*/
 double azimuth;		/* azimuth					*/
@@ -62,36 +62,36 @@ long mode;		/* which initialization method  to use A or B	*/
 
 	/* Function declarations for function pointer use
 	-----------------------------------------------*/
-long utmfor();
-long stplnfor();
-long alberfor();
-long lamccfor();
-long merfor();
-long psfor();
-long polyfor();
-long eqconfor();
-long tmfor();
-long sterfor();
-long lamazfor();
-long azimfor();
-long gnomfor();
-long orthfor();
-long gvnspfor();
-long sinfor();
-long equifor();
-long millfor();
-long vandgfor();
-long omerfor();
-long somfor();
-long hamfor();
-long robfor();
-long goodfor();
-long molwfor();
-long imolwfor();
-long alconfor();
-long wivfor();
-long wviifor();
-long obleqfor();
+long utmfor(double, double, double *, double *);
+long stplnfor(double, double, double *, double *);
+long alberfor(double, double, double *, double *);
+long lamccfor(double, double, double *, double *);
+long merfor(double, double, double *, double *);
+long psfor(double, double, double *, double *);
+long polyfor(double, double, double *, double *);
+long eqconfor(double, double, double *, double *);
+long tmfor(double, double, double *, double *);
+long sterfor(double, double, double *, double *);
+long lamazfor(double, double, double *, double *);
+long azimfor(double, double, double *, double *);
+long gnomfor(double, double, double *, double *);
+long orthfor(double, double, double *, double *);
+long gvnspfor(double, double, double *, double *);
+long sinfor(double, double, double *, double *);
+long equifor(double, double, double *, double *);
+long millfor(double, double, double *, double *);
+long vandgfor(double, double, double *, double *);
+long omerfor(double, double, double *, double *);
+long somfor(double, double, double *, double *);
+long hamfor(double, double, double *, double *);
+long robfor(double, double, double *, double *);
+long goodfor(double, double, double *, double *);
+long molwfor(double, double, double *, double *);
+long imolwfor(double, double, double *, double *);
+long alconfor(double, double, double *, double *);
+long wivfor(double, double, double *, double *);
+long wviifor(double, double, double *, double *);
+long obleqfor(double, double, double *, double *);
 
 /* Initialize forward transformations
 -----------------------------------*/

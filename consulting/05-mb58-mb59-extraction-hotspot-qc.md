@@ -105,3 +105,32 @@ When passing files to a client algorithm team, include:
 - **Threshold methodology:** `N`, P95/P99 values, row counts, and any NaN filtering rules.
 
 This aligns **parser reality** (repeat cycles, pairing rules) with **operator artifacts** (CSV extracts) without over-claiming geological interpretation.
+
+## 7) Limitation: Central beams echogram (vendor type **K**, ID **0x4B**) vs seabed image (`mblist -O … .s … .p`)
+
+Client documentation often refers to **“Central beams echograms”** with **datagram type K** and hex **4Bh**. In MB-System headers this is **`EM3_ID_CBECHO` / `EM3_CBECHO`** (same low byte **`0x4B`**):
+
+```314:317:src/mbio/mbsys_simrad3.h
+#define EM3_ID_TILT 0x4A
+#define EM3_ID_CBECHO 0x4B
+#define EM3_ID_RAWBEAM4 0x4E
+```
+
+**Do not expect the seabed-image `mblist` recipe to apply unchanged.**
+
+- **Seabed image sample amplitudes** (the workflow using `mblist … -MA -ON#.s.Np` with the raw `.p` token) come from MB-System’s **SS2 / seabed-image** path (`mbr_em710raw_rd_ss2()`, type **`EM3_SS2` / `0x59`**, etc.), which unpacks into `png_beam_samples[]` / `png_ssraw[]` for listing.
+
+- **Central beams echogram (`0x4B`)** is a **different datagram layout**. In `mbr_em710raw_rd_data()` there is **no dedicated reader branch** for `EM3_CBECHO` alongside bathy, rawbeam4, SS2, water column, etc. Datagram types that are not handled explicitly fall through to the **generic skip path** (payload bytes are consumed but **not decoded into `mbsys_simrad3` fields** that `mblist` can export):
+
+```4868:4875:src/mbio/mbr_em710raw.c
+		else {
+#ifdef MBR_EM710RAW_DEBUG
+			fprintf(stderr, "skip over %d bytes of unsupported datagram type %x\n", *record_size_save, type);
+#endif
+			for (int i = 0; i < *record_size_save - 4; i++) {
+				read_len = 1;
+				status = mb_fileio_get(verbose, mbio_ptr, (char *)&junk, &read_len, error);
+			}
+```
+
+**Practical takeaway for deliverables:** tell clients that **per-sample amplitude CSVs from `mblist` raw sidescan tokens are seabed-image / SS2-class data**, not central-beams echogram (**K**). Extracting **K** amplitudes requires **vendor-aware parsing** of the raw stream (or future MB-System support), not a different `mblist` flag on the same export path.

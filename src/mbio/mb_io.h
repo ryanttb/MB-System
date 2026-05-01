@@ -559,6 +559,9 @@ struct mb_io_struct {
 
   /* working variables */
   int ping_count;    /* number of pings read or written so far */
+  /* Simrad/Kongsberg EM raw: central beams echogram datagram (vendor type K, id 0x4B, MB-System EM2/EM3 type 0x024B).
+   * Incremented in mbr_em*raw/mba readers when the payload is skipped (not decoded into store structures). */
+  int simrad_cbecho_datagram_count;
   int nav_count;     /* number of nav records read or written so far */
   int comment_count; /* number of comments read or written so far */
   int pings_avg;     /* number of pings currently averaged */

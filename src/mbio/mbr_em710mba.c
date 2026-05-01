@@ -5245,6 +5245,8 @@ Have a nice day...\n");
 #endif
 		}
 		else {
+			if (type == EM3_CBECHO)
+				mb_io_ptr->simrad_cbecho_datagram_count++;
 #ifdef MBR_EM710MBA_DEBUG
 			fprintf(stderr, "skip over %d bytes of unsupported datagram type %x\n", *record_size_save, type);
 #endif

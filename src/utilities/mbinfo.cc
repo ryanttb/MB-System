@@ -1958,6 +1958,19 @@ int main(int argc, char **argv) {
           }
         }
 
+        /* Kongsberg/Simrad central beams echogram (vendor type K, id 0x4B): presence in raw stream */
+        {
+          const struct mb_io_struct *const mb_io_ptr_cbecho = (struct mb_io_struct *)mbio_ptr;
+          if (mb_io_ptr_cbecho->simrad_cbecho_datagram_count > 0) {
+            fprintf(stream,
+                    "Central beams echogram found: %d datagram(s) (type K / id 0x4B, MB-System type 0x%04X; payloads skipped, not "
+                    "decoded).\n",
+                    mb_io_ptr_cbecho->simrad_cbecho_datagram_count, 0x024B);
+          } else {
+            fprintf(stream, "Central beams echogram not found.\n");
+          }
+        }
+
         /* close the swath file */
         status &= mb_close(verbose, &mbio_ptr, &error);
 

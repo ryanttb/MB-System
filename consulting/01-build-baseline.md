@@ -24,7 +24,7 @@ sudo apt install -y \
   build-essential cmake gfortran \
   netcdf-bin libnetcdf-dev libgdal-dev \
   gmt libgmt6 libgmt-dev libproj-dev \
-  libfftw3-3 libfftw3-dev libmotif-dev \
+  libfftw3-bin libfftw3-dev libmotif-dev \
   xfonts-100dpi libglu1-mesa-dev \
   libopencv-dev
 ```
@@ -146,3 +146,4 @@ Use only when CMake is not viable on the target OS:
 make -j"$(nproc)"
 sudo make install
 ```
+

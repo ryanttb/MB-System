@@ -248,3 +248,5 @@ src/utilities/mbstripnan
 src/utilities/mbswplspreprocess
 includes.txt
 cppcheck.txt
+
+consulting/invoices/*
